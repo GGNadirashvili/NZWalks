@@ -11,7 +11,7 @@ using NZWalks.API.Data;
 
 namespace NZWalks.API.Migrations
 {
-    [DbContext(typeof(NZWalksDbContect))]
+    [DbContext(typeof(NZWalksDbContext))]
     [Migration("20240120063754_add RegionImageUrl")]
     partial class addRegionImageUrl
     {
