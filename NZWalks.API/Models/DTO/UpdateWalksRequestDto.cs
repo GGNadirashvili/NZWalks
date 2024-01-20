@@ -4,7 +4,7 @@ namespace NZWalks.API.Models.DTO
 {
 	public class UpdateWalksRequestDto
 	{
-		[Required]
+	[Required]
 		[MaxLength(100)]
 		public string Name { get; set; }
 
@@ -22,7 +22,7 @@ namespace NZWalks.API.Models.DTO
 
 		[Required]
 
-		public Guid WalkDifficultyId { get; set; }
+		public Guid DifficultyId { get; set; }
 
 		[Required]
 

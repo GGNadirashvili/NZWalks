@@ -14,19 +14,8 @@ namespace NZWalks.API.Models.DTO
 
 		public string Name { get; set; }
 
-		[Required]
+		public string? RegionImageUrl { get; set; }
 
-		public double Area { get; set; }
 
-		[Required]
-
-		public double Lat { get; set; }
-
-		[Required]
-		public double Long { get; set; }
-
-		[Required]
-
-		public long Population { get; set; }
 	}
 }

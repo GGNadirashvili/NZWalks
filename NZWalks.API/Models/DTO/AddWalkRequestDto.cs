@@ -20,11 +20,11 @@ namespace NZWalks.API.Models.DTO
 
 		[Required]
 
-		public string? WalkingImageUrl { get; set; }
+		public string? WalkImageUrl { get; set; }
 
 		[Required]
 
-		public Guid WalkDifficultyId { get; set; }
+		public Guid DifficultyId { get; set; }
 
 		[Required]
 

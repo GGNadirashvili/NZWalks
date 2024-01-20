@@ -52,10 +52,6 @@ namespace NZWalks.API.Repositories
 			existingRegion.Code = region.Code;
 			existingRegion.Name = region.Name;
 			existingRegion.Walks = region.Walks;
-			existingRegion.Area = region.Area;
-			existingRegion.Population = region.Population;
-			existingRegion.Lat = region.Lat;
-			existingRegion.Long = region.Long;
 
 			await dbContext.SaveChangesAsync();
 			return existingRegion;
