@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NZWalks.API.CustomActionFilters;
 using NZWalks.API.Data;
 using NZWalks.API.Models.Domain;
 using NZWalks.API.Models.DTO;
@@ -62,24 +64,32 @@ namespace NZWalks.API.Controllers
 		//POST To Create New Region
 		//POST:https://localhost:7073/api/regions
 		[HttpPost]
+
+		//Check Validations
+		[ValidateModel]
 		public async Task<IActionResult> Create([FromBody] AddRegionRequestDto addRegionRequestDto)
 		{
-			// Map or Convert DTO to Domain Model
-			var regionDomainModel = mapper.Map<Region>(addRegionRequestDto);
+				{
+					// Map or Convert DTO to Domain Model
+					var regionDomainModel = mapper.Map<Region>(addRegionRequestDto);
 
 
-			//Use Domain Model to create Region
-			regionDomainModel = await regionRepository.CreateAsync(regionDomainModel);
+					//Use Domain Model to create Region
+					regionDomainModel = await regionRepository.CreateAsync(regionDomainModel);
 
-			// Map Domain model back to DTO
-			var regionDto = mapper.Map<RegionDto>(regionDomainModel);
-			return CreatedAtAction(nameof(GetById), new { id = regionDomainModel.Id }, regionDomainModel);
+					// Map Domain model back to DTO
+					var regionDto = mapper.Map<RegionDto>(regionDomainModel);
+					return CreatedAtAction(nameof(GetById), new { id = regionDomainModel.Id }, regionDomainModel);
+				}
 		}
 
 		// Update region
 		// PUT:https://localhost:7073/api/regions/{id}
 		[HttpPut]
 		[Route("{id:Guid}")]
+
+		//Check Validations
+		[ValidateModel]
 		public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
 		{
 			//Map DTO to domain model

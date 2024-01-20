@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NZWalks.API.CustomActionFilters;
 using NZWalks.API.Models.Domain;
 using NZWalks.API.Models.Dto;
 using NZWalks.API.Models.DTO;
@@ -17,15 +18,19 @@ namespace NZWalks.API.Controllers
 		private readonly IWalkRepository walkRepository;
 
 		public WalksController(IMapper mapper, IWalkRepository walkRepository)
-        {
+		{
 			this.mapper = mapper;
 			this.walkRepository = walkRepository;
 		}
-        // CREATE walk
-        // POST: /api/walks
-        [HttpPost]
+		// CREATE walk
+		// POST: /api/walks
+		[HttpPost]
+
+		//Check Validations
+		[ValidateModel]
 		public async Task<IActionResult> Create([FromBody] AddWalkRequestDto addWalRequestDto)
 		{
+
 			// Map DTO to Domain Model
 			var walkDomainModel = mapper.Map<Walk>(addWalRequestDto);
 
@@ -37,13 +42,14 @@ namespace NZWalks.API.Controllers
 
 		}
 
+
 		//GET Walks
 		//GET: /api/walks
 		[HttpGet]
 		public async Task<IActionResult> GetAll()
 		{
 			var walksDomainModel = await walkRepository.GetAllAsync();
-			
+
 			//Map Domain Model to DTO
 			return Ok(mapper.Map<List<WalkDto>>(walksDomainModel));
 		}
@@ -57,7 +63,7 @@ namespace NZWalks.API.Controllers
 		public async Task<IActionResult> GetById([FromRoute] Guid id)
 		{
 			var walkDomainModel = await walkRepository.GetByIdAsync(id);
-			if(walkDomainModel == null)
+			if (walkDomainModel == null)
 			{
 				return NotFound();
 			}
@@ -72,13 +78,18 @@ namespace NZWalks.API.Controllers
 		[HttpPut]
 		[Route("{id:Guid}")]
 
+
+
+		//Check Validations
+		[ValidateModel]
 		public async Task<IActionResult> Update([FromRoute] Guid id, UpdateWalksRequestDto updateWalksRequestDto)
 		{
+
 			// MAP DTO to Domain Model
 			var walkDomainModel = mapper.Map<Walk>(updateWalksRequestDto);
 
 			walkDomainModel = await walkRepository.UpdateAsync(id, walkDomainModel);
-			if(walkDomainModel == null)
+			if (walkDomainModel == null)
 			{
 				return NotFound();
 			}
@@ -97,7 +108,7 @@ namespace NZWalks.API.Controllers
 		public async Task<IActionResult> Delete([FromRoute] Guid id)
 		{
 			var deletedWalkDomainModel = await walkRepository.DeleteAsync(id);
-		
+
 			if (deletedWalkDomainModel == null)
 			{
 				return NotFound();
